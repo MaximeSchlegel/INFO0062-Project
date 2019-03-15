@@ -5,7 +5,7 @@ import java.util.Map;
 public class SoccerBall {
     private Polygon[] face;
     private int[] faceSideNumber;
-    private Map<Integer, int[][]> edgeNetwork;
+    private Map<Integer, int[][]> edgeNetwork; //Is it the best representation as we will check for confilct for a particular piece
 
     public SoccerBall(int[][] connection, int[][] elementSide, int[] elementNumber) {
         //Initialisation of the ScoccerBall
