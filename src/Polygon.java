@@ -20,6 +20,10 @@ public class Polygon {
         return this.orientation > Data.ELEMENTS_SIDES[this.sideType].length;
     }
 
+    public int getType () {
+        return Data.ELEMENTS_SIDES[this.sideType].length;
+    }
+
     public int getSideType(int sideNumber) {
         int[] side = Data.ELEMENTS_SIDES[this.sideType];
         return side[(this.orientation + sideNumber) % side.length];

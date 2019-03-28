@@ -6,8 +6,9 @@ public class SoccerBall {
     private Polygon[]face;
     private int[] faceSideNumber;
     private Map<Integer, int[][]> edgeNetwork; //Is it the best representation as we will check for confilct for a particular piece
+    private int nextface;
 
-    public SoccerBall(int[][] connection, int[][] elementSide, int[] elementNumber) {
+    public SoccerBall(int[][] connection) {
         //Initialisation of the ScoccerBall
         this.face = new Polygon[connection.length];
         this.faceSideNumber = new int[connection.length];
@@ -26,27 +27,18 @@ public class SoccerBall {
                 }
             }
         }
-
-        //creation of the available pieces for construction
-        ArrayList<ArrayList<Polygon>> availablePiece = new ArrayList<>();
-        for (int i=0; i < elementSide.length; i++) {
-            availablePiece.add(new ArrayList<>());
-            for (int j=0; j < elementNumber[i]; j++) {
-                availablePiece.get(i).add(new Polygon(elementSide[i]));
-            }
-        }
-
-        //Construction of the soccer ball
-        //TODO
-
-
+        this.nextface = 0;
     }
 
-    public void addFace(Polygon p, int i) {}
-    public Polygon popFace(int i) {}
-    public int typeFace(int i) {}
-    public boolean hasFaceConflict(int i) {}
-
+    public void addFace(Polygon p) throws Exception{
+        if (p.getType() != this.typeFace()) {
+            throw new Exception("Faces Type Don't Match")
+        }
+    }
+    public Polygon popFace() {}
+    public int typeFace() {}
+    public boolean hasConflict() {}
+    public boolean isComplete() {}
     public void display() {
         //TODO
     }
