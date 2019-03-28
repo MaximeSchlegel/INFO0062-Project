@@ -22,7 +22,10 @@ public class Solver {
 
     public static void main(String[] args){
         Solver solver = new Solver();
-        System.out.println(solver.pieces_available);
+        for (int i = 0; i < solver.pieces_available.length; i++){
+            System.out.println(solver.pieces_available[i]);
+        }
+
     }
 
 
