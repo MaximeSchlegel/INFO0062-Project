@@ -30,20 +30,50 @@ public class SoccerBall {
         this.nextface = 0;
     }
 
+    public int typeFace() {
+        return this.faceSideNumber[this.nextface];
+    }
     public void addFace(Polygon p) throws Exception{
         if (p.getType() != this.typeFace()) {
-            throw new Exception("Faces Type Don't Match")
+            throw new Exception("Faces' type don't match");
         }
+        this.face[this.nextface] = p;
+        this.nextface++;
     }
-    public Polygon popFace() {}
-    public int typeFace() {}
-    public boolean hasConflict() {}
-    public boolean isComplete() {}
-    public void display() {
-        //TODO
+
+    public Polygon popFace() throws Exception{
+        if (this.nextface == 0) {
+            throw new Exception("Nothing to pop");
+        }
+        Polygon p = this.face[this.nextface - 1];
+        this.nextface--;
+        return p;
+    }
+
+    public boolean hasConflict() {
+        for (int link : Data.CONNECTIONS[this.nextface - 1]) {
+            int[][] edge = this.edgeNetwork.get(link);
+            if (this.face[edge[0][0]].getSideType(edge[0][1]) != this.face[edge[1][0]].getSideType(edge[1][1])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isComplete() {
+        return this.nextface == this.face.length;
+    }
+    public String toString() {
+        StringBuilder repr = new StringBuilder();
+        for (int i=0; i < this.face.length; i++) {
+            repr.append("Positin " + i + " - ");
+            repr.append(this.face);
+            repr.append("\n");
+        }
+        return repr.toString();
     }
     public static void main(String[] args) {
-        SoccerBall ball = new SoccerBall(Data.CONNECTIONS, Data.ELEMENTS_SIDES, Data.NB_ELEMENTS);
-        ball.display();
+//        SoccerBall ball = new SoccerBall(Data.CONNECTIONS, Data.ELEMENTS_SIDES, Data.NB_ELEMENTS);
+//        ball.display();
     }
 }
