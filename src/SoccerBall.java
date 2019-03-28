@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SoccerBall {
-    private Polygon[] face;
+    private Polygon[]face;
     private int[] faceSideNumber;
     private Map<Integer, int[][]> edgeNetwork; //Is it the best representation as we will check for confilct for a particular piece
 
@@ -42,9 +42,10 @@ public class SoccerBall {
 
     }
 
-    private boolean hasConflict() {
-        return false;
-    }
+    public void addFace(Polygon p, int i) {}
+    public Polygon popFace(int i) {}
+    public int typeFace(int i) {}
+    public boolean hasFaceConflict(int i) {}
 
     public void display() {
         //TODO

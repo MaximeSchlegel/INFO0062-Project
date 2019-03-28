@@ -1,46 +1,37 @@
 public class Polygon {
     private int orientation;
-    private int[] sideType;
+    private int sideType;
 
-    public Polygon(int[] side){
+    public Polygon(int side){
         //Create a polygon based on the type list of its side
         this.sideType = side;
         this.orientation = 0;
     }
 
     public void rotate() {
-        orientation++;
+        orientation = orientation++;
     }
 
     public void reinitilize(){
-        this.orientation =0;
+        this.orientation = 0;
     }
 
     public boolean completeRotation() {
-        return this.orientation > this.sideType.length;
+        return this.orientation > Data.ELEMENTS_SIDES[this.sideType].length;
     }
 
     public int getSideType(int sideNumber) {
-        return this.sideType[(this.orientation + sideNumber) % this.sideType.length];
+        int[] side = Data.ELEMENTS_SIDES[this.sideType];
+        return side[(this.orientation + sideNumber) % side.length];
     }
 
     public String toString() {
-        String repr;
-        if (this.sideType.length == 5) {
-            repr = "Pentagon";
-        } else if (this.sideType.length == 6) {
-            repr = "Hexagon";
-        } else {
-            repr = "Polygon";
-        }
-        repr += "\n  Orientation : " + this.orientation + "\n  Sides : [";
-        for(int i : this.sideType) {
-            repr += " " + i + ",";
-        }
-        return repr + " ]";
+        int o = this.orientation % Data.ELEMENTS_SIDES[this.sideType].length;
+        return "Element " + this.sideType + " - Orientation " + o;
     }
+
     public static void main(String[] args) {
-        for (int[] i : Data.ELEMENTS_SIDES) {
+        for (int i=0; i < Data.ELEMENTS_SIDES.length; i++) {
             System.out.println(new Polygon(i));
         }
     }
