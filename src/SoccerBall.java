@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import javax.annotation.processing.SupportedSourceVersion;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -6,7 +6,7 @@ public class SoccerBall {
     private Polygon[]face;
     private int[] faceSideNumber;
     private Map<Integer, int[][]> edgeNetwork; //Is it the best representation as we will check for confilct for a particular piece
-    private int nextface;
+    private int nextFace;
 
     public SoccerBall(int[][] connection) {
         //Initialisation of the ScoccerBall
@@ -27,31 +27,31 @@ public class SoccerBall {
                 }
             }
         }
-        this.nextface = 0;
+        this.nextFace = 0;
     }
 
     public int typeFace() {
-        return this.faceSideNumber[this.nextface];
+        return this.faceSideNumber[this.nextFace];
     }
     public void addFace(Polygon p) throws Exception{
         if (p.getType() != this.typeFace()) {
             throw new Exception("Faces' type don't match");
         }
-        this.face[this.nextface] = p;
-        this.nextface++;
+        this.face[this.nextFace] = p;
+        this.nextFace++;
     }
 
     public Polygon popFace() throws Exception{
-        if (this.nextface == 0) {
+        if (this.nextFace == 0) {
             throw new Exception("Nothing to pop");
         }
-        Polygon p = this.face[this.nextface - 1];
-        this.nextface--;
+        Polygon p = this.face[this.nextFace - 1];
+        this.nextFace--;
         return p;
     }
 
     public boolean hasConflict() {
-        for (int link : Data.CONNECTIONS[this.nextface - 1]) {
+        for (int link : Data.CONNECTIONS[this.nextFace - 1]) {
             int[][] edge = this.edgeNetwork.get(link);
             if (this.face[edge[0][0]].getSideType(edge[0][1]) != this.face[edge[1][0]].getSideType(edge[1][1])) {
                 return true;
@@ -61,7 +61,7 @@ public class SoccerBall {
     }
 
     public boolean isComplete() {
-        return this.nextface == this.face.length;
+        return this.nextFace == this.face.length;
     }
     public String toString() {
         StringBuilder repr = new StringBuilder();
@@ -72,8 +72,11 @@ public class SoccerBall {
         }
         return repr.toString();
     }
-    public static void main(String[] args) {
-//        SoccerBall ball = new SoccerBall(Data.CONNECTIONS, Data.ELEMENTS_SIDES, Data.NB_ELEMENTS);
-//        ball.display();
+    public static void main(String[] args) throws Exception {
+        SoccerBall ball = new SoccerBall(Data.CONNECTIONS);
+        System.out.println(ball);
+        Polygon p = new Polygon(12);
+        ball.addFace(p);
+        System.out.println(ball);
     }
 }

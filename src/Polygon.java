@@ -9,15 +9,15 @@ public class Polygon {
     }
 
     public void rotate() {
-        orientation = orientation++;
+        this.orientation++;
     }
 
-    public void reinitilize(){
+    public void reinitialize(){
         this.orientation = 0;
     }
 
     public boolean completeRotation() {
-        return this.orientation > Data.ELEMENTS_SIDES[this.sideType].length;
+        return this.orientation >= Data.ELEMENTS_SIDES[this.sideType].length;
     }
 
     public int getType () {
@@ -34,9 +34,18 @@ public class Polygon {
         return "Element " + this.sideType + " - Orientation " + o;
     }
 
-    public static void main(String[] args) {
-        for (int i=0; i < Data.ELEMENTS_SIDES.length; i++) {
-            System.out.println(new Polygon(i));
-        }
-    }
+//    public static void main(String[] args) {
+//        Polygon p = new Polygon(1);
+//        System.out.println(p);
+//        p.rotate();
+//        System.out.println(p);
+//        p.rotate();p.rotate();p.rotate();p.rotate();
+//        System.out.println(p);
+//        p.rotate();
+//        System.out.println(p);
+//        System.out.println(p.completeRotation());
+//        p.reinitialize();
+//        System.out.println(p);
+//        System.out.println(p.completeRotation());
+//    }
 }
