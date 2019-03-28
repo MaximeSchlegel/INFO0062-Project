@@ -1,4 +1,4 @@
-import javax.annotation.processing.SupportedSourceVersion;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,17 +66,18 @@ public class SoccerBall {
     public String toString() {
         StringBuilder repr = new StringBuilder();
         for (int i=0; i < this.face.length; i++) {
-            repr.append("Positin " + i + " - ");
-            repr.append(this.face);
+            repr.append("Position " + i + " - ");
+            repr.append(this.face[i]);
             repr.append("\n");
         }
         return repr.toString();
     }
     public static void main(String[] args) throws Exception {
+//        Solver s = new Solver();
+//        s.solve();
+//        System.out.println(s.ball);
         SoccerBall ball = new SoccerBall(Data.CONNECTIONS);
-        System.out.println(ball);
-        Polygon p = new Polygon(12);
-        ball.addFace(p);
+        ball.addFace(new Polygon(12));
         System.out.println(ball);
     }
 }

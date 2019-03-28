@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class Solver {
     private ArrayList<Polygon> listHexagon = new ArrayList<>();
     private ArrayList<Polygon> listPentagon = new ArrayList<>();
-    private SoccerBall ball;
+    public SoccerBall ball;
 
-    private Solver() {
+    public Solver() {
         for (int i = 0; i < Data.NB_ELEMENTS.length; i++) {
             for (int j = 0; j < Data.NB_ELEMENTS[i]; j++){
                 if (Data.ELEMENTS_SIDES[i].length == 6) {
