@@ -2,22 +2,26 @@ import java.util.Stack;
 
 
 public class Solver {
-    private Stack stack = new Stack();
-    public Polygon[] pieces_available = new Polygon[32];
+    private Stack stackHexagon = new Stack();
+    private Stack stackPentagon = new Stack();
     private SoccerBall ball;
 
-    public Solver() {
-        int index = 0;
+    private Solver() {
         for (int i = 0; i < Data.NB_ELEMENTS.length; i++) {
             for (int j = 0; j < Data.NB_ELEMENTS[i]; j++){
-                pieces_available[index] = new Polygon(Data.ELEMENTS_SIDES[i]);
-                index++;
+                if (Data.ELEMENTS_SIDES[i].length == 6) {
+                    stackHexagon.push(new Polygon(i));
+                }
+                else {
+                    stackPentagon.push(new Polygon(i));
+                }
+
             }
         }
     }
 
     public void solve(){
-        // TODO
+
     }
 
     public static void main(String[] args){
