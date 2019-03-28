@@ -43,7 +43,6 @@ public class SoccerBall {
     }
 
     private boolean hasConflict() {
-        for ()
         return false;
     }
 
