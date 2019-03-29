@@ -1,3 +1,4 @@
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.util.ArrayList;
 
 
@@ -23,7 +24,6 @@ public class Solver {
     public void solve()throws Exception{
         while (!ball.isComplete()) {
             if (ball.typeFace() == 6) {
-
                 if (!testpolygons(listHexagon)) {
                     Polygon polygon = ball.popFace();
                     rangePolygon(polygon);
@@ -38,6 +38,21 @@ public class Solver {
         }
     }
 
+    private  boolean testpolygons(ArrayList<Polygon> polygonList) throws Exception{
+        for (int index=0; index < polygonList.size(); index ++) {
+            Polygon polygon = polygonList.get(index);
+
+            if (testPolygonOrientation(polygon)) {
+                System.out.println(index);
+                System.out.println(polygonList);
+                System.out.println(polygonList.get(index));
+                listPentagon.remove(index);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean testPolygonOrientation(Polygon polygon)throws Exception{
         polygon.reinitialize();
         while(!polygon.completeRotation()) {
@@ -47,22 +62,6 @@ public class Solver {
             } else {
                 ball.popFace();
                 polygon.rotate();
-            }
-        }
-        return false;
-    }
-
-    private  boolean testpolygons(ArrayList<Polygon> polygonList) throws Exception{
-        int index = 0;
-        while (index < polygonList.size()) {
-            Polygon polygon = polygonList.get(index);
-
-            if (testPolygonOrientation(polygon)) {
-                listPentagon.remove(index);
-                return true;
-            }
-            else {
-                index++;
             }
         }
         return false;
