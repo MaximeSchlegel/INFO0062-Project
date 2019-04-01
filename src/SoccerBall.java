@@ -76,6 +76,15 @@ public class SoccerBall {
         }
         return repr.toString();
     }
+
+    public void rotateTop() {
+        this.face[this.nextFace - 1].rotate();
+    }
+
+    public boolean completeRotationTop() {
+        return this.face[this.nextFace - 1].completeRotation();
+    }
+
     public static void main(String[] args) throws Exception {
         Solver s = new Solver();
         s.solve();
