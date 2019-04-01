@@ -22,20 +22,20 @@ public class Solver {
 
     public void solve()throws Exception {
         while (!ball.isComplete()) {
-            System.out.println(ball);
+//            System.out.println(ball);
 
             Polygon polygon = search();
 
             if (polygon == null) {
-                System.out.println(1);
                 if (!testRotation()) {
                     Polygon polygonPop = ball.popFace();
                     lastNumberPolygon = polygonPop.getElementNumber();
+                    System.out.println("remove " + lastNumberPolygon);
                     listPolygon[lastNumberPolygon].add(polygonPop);
                 }
             }
             else {
-                System.out.println(2);
+                System.out.println("Ajout " + polygon.getElementNumber());
                 ball.addFace(polygon);
                 listPolygon[polygon.getElementNumber()].remove(0);
                 lastNumberPolygon = 0;
@@ -45,6 +45,8 @@ public class Solver {
 
     private Polygon search() throws Exception{
         for (int index=lastNumberPolygon; index < listPolygon.length; index ++) {
+
+//            System.out.println(index);
             if (!listPolygon[index].isEmpty() && listPolygon[index].get(0).getType() == ball.typeFace()) {
                 Polygon polygon = listPolygon[index].get(0);
 //                System.out.println(polygon);
@@ -62,12 +64,13 @@ public class Solver {
     }
 
     private boolean testRotation() throws Exception{
-        while (ball.hasConflict()) {
+        do {
             ball.rotateTop();
             if (ball.completeRotationTop()) {
                 return false;
             }
         }
+        while (ball.hasConflict());
 
         return true;
     }
