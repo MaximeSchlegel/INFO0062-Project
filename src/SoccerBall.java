@@ -93,7 +93,7 @@ public class SoccerBall {
     }
 
     public static void main(String[] args) throws Exception {
-        Solver s = new Solver();
+        Solver s = new Solver(new Data());
         s.solve();
         System.out.println(s.ball);
 //        SoccerBall ball = new SoccerBall(Data.CONNECTIONS);
