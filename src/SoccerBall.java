@@ -6,7 +6,7 @@ public class SoccerBall {
     private Polygon[]face;
     private int[] faceSideNumber;
     private Map<Integer, int[][]> edgeNetwork; //Is it the best representation as we will check for confilct for a particular piece
-    private int nextFace;
+    public int nextFace;
 
     public SoccerBall(int[][] connection) {
         //Initialisation of the ScoccerBall
@@ -35,6 +35,7 @@ public class SoccerBall {
     public int typeFace() {
         return this.faceSideNumber[this.nextFace];
     }
+
     public void addFace(Polygon p) throws Exception{
         if (p.getType() != this.typeFace()) {
             throw new Exception("Faces' type don't match");
