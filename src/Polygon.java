@@ -29,6 +29,10 @@ public class Polygon {
         return side[(this.orientation + sideNumber) % side.length];
     }
 
+    public int getElementNumber() {
+        return this.sideType;
+    }
+
     public String toString() {
         int o = this.orientation % Data.ELEMENTS_SIDES[this.sideType].length;
         return "Element " + this.sideType + " - Orientation " + o;

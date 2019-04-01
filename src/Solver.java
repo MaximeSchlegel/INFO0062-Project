@@ -1,4 +1,4 @@
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
+//import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.util.ArrayList;
 
 
@@ -22,31 +22,34 @@ public class Solver {
     }
 
     public void solve()throws Exception{
+        int lastNumber = -1;
         while (!ball.isComplete()) {
             if (ball.typeFace() == 6) {
-                if (!testpolygons(listHexagon)) {
+                if (!testpolygons(listHexagon, lastNumber)) {
                     Polygon polygon = ball.popFace();
+                    lastNumber = polygon.getElementNumber();
                     rangePolygon(polygon);
                 }
             }
             else {
-                if (!testpolygons(listPentagon)) {
+                if (!testpolygons(listPentagon, lastNumber)) {
                     Polygon polygon = ball.popFace();
+                    lastNumber = polygon.getElementNumber();
                     rangePolygon(polygon);
                 }
             }
         }
     }
 
-    private  boolean testpolygons(ArrayList<Polygon> polygonList) throws Exception{
+    private  boolean testpolygons(ArrayList<Polygon> polygonList, int lastNumber) throws Exception{
         for (int index=0; index < polygonList.size(); index ++) {
             Polygon polygon = polygonList.get(index);
 
             if (testPolygonOrientation(polygon)) {
-                System.out.println(index);
-                System.out.println(polygonList);
-                System.out.println(polygonList.get(index));
-                listPentagon.remove(index);
+//                System.out.println(index);
+//                System.out.println(polygonList);
+//                System.out.println(polygonList.get(index));
+                polygonList.remove(index);
                 return true;
             }
         }
@@ -68,6 +71,7 @@ public class Solver {
     }
 
     private void rangePolygon(Polygon polygon) {
+
         if (polygon.getType() == 6) {
             listHexagon.add(polygon);
         }
@@ -76,11 +80,5 @@ public class Solver {
         }
 
     }
-
-    public static void main(String[] args){
-
-        }
-
-
 
 }
