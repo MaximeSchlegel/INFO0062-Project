@@ -85,6 +85,13 @@ public class SoccerBall {
         return this.face[this.nextFace - 1].completeRotation();
     }
 
+    public boolean testFace(Polygon polygon) throws Exception {
+        this.addFace(polygon);
+        boolean conflic = this.hasConflict();
+        this.popFace();
+        return conflic;
+    }
+
     public static void main(String[] args) throws Exception {
         Solver s = new Solver();
         s.solve();
