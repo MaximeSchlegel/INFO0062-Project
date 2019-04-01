@@ -22,19 +22,19 @@ public class Solver {
     }
 
     public void solve()throws Exception{
-        int lastNumber = -1;
+        int lastNumberHexa = -1, lastNumberPenta = -1;
         while (!ball.isComplete()) {
             if (ball.typeFace() == 6) {
-                if (!testpolygons(listHexagon, lastNumber)) {
+                if (!testpolygons(listHexagon, lastNumberHexa)) {
                     Polygon polygon = ball.popFace();
-                    lastNumber = polygon.getElementNumber();
+                    lastNumberHexa = polygon.getElementNumber();
                     rangePolygon(polygon);
                 }
             }
             else {
-                if (!testpolygons(listPentagon, lastNumber)) {
+                if (!testpolygons(listPentagon, lastNumberPenta)) {
                     Polygon polygon = ball.popFace();
-                    lastNumber = polygon.getElementNumber();
+                    lastNumberPenta = polygon.getElementNumber();
                     rangePolygon(polygon);
                 }
             }
@@ -44,10 +44,11 @@ public class Solver {
     private  boolean testpolygons(ArrayList<Polygon> polygonList, int lastNumber) throws Exception{
         for (int index=0; index < polygonList.size(); index ++) {
             Polygon polygon = polygonList.get(index);
-
-            if (testPolygonOrientation(polygon)) {
-//                System.out.println(index);
-//                System.out.println(polygonList);
+            if (polygon.getElementNumber() > lastNumber && testPolygonOrientation(polygon)) {
+                System.out.println(polygonList);
+                System.out.println(lastNumber);
+                System.out.println(index);
+                System.out.println(polygon.getElementNumber());
 //                System.out.println(polygonList.get(index));
                 polygonList.remove(index);
                 return true;
