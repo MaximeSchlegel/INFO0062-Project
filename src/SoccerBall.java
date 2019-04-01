@@ -48,6 +48,7 @@ public class SoccerBall {
             throw new Exception("Nothing to pop");
         }
         Polygon p = this.face[this.nextFace - 1];
+        this.face[this.nextFace - 1] = null;
         this.nextFace--;
         return p;
     }
