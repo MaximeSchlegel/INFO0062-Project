@@ -1,55 +1,41 @@
 public class Polygon {
+    private int type;
+    private int[] sideType;
     private int orientation;
-    private int sideType;
 
-    public Polygon(int side){
+    public Polygon(int type){
         //Create a polygon based on the type list of its side
-        this.sideType = side;
+        this.type = type;
+        this.sideType = Data.ELEMENTS_SIDES[type];
         this.orientation = 0;
+    }
+
+    public int getType () {
+        return this.sideType.length;
+    }
+
+    public int getElementNumber() {
+        return this.type;
+    }
+
+    public int getSideType(int sideNumber) {
+        return this.sideType[(this.orientation + sideNumber) % this.sideType.length];
     }
 
     public void rotate() {
         this.orientation++;
     }
 
-    public void reinitialize(){
+    public void reinitialize() {
         this.orientation = 0;
     }
 
     public boolean completeRotation() {
-        return this.orientation >= Data.ELEMENTS_SIDES[this.sideType].length;
-    }
-
-    public int getType () {
-        return Data.ELEMENTS_SIDES[this.sideType].length;
-    }
-
-    public int getSideType(int sideNumber) {
-        int[] side = Data.ELEMENTS_SIDES[this.sideType];
-        return side[(this.orientation + sideNumber) % side.length];
-    }
-
-    public int getElementNumber() {
-        return this.sideType;
+        return this.orientation >= this.sideType.length;
     }
 
     public String toString() {
-        int o = this.orientation % Data.ELEMENTS_SIDES[this.sideType].length;
-        return "Element " + this.sideType + " - Orientation " + o;
+        int o = (this.orientation % this.sideType.length);
+        return "Element " + (this.type + 1) + " - Orientation " + o;
     }
-
-//    public static void main(String[] args) {
-//        Polygon p = new Polygon(1);
-//        System.out.println(p);
-//        p.rotate();
-//        System.out.println(p);
-//        p.rotate();p.rotate();p.rotate();p.rotate();
-//        System.out.println(p);
-//        p.rotate();
-//        System.out.println(p);
-//        System.out.println(p.completeRotation());
-//        p.reinitialize();
-//        System.out.println(p);
-//        System.out.println(p.completeRotation());
-//    }
 }

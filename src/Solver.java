@@ -1,22 +1,21 @@
-//import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-import java.io.SequenceInputStream;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Solver {
-    private ArrayList<Polygon>[] listPolygon;
-    public SoccerBall ball;
-    private int lastNumberPolygon;
+    private Stack<Polygon>[] availablePolygon;
+    private SoccerBall ball;
+    private int lastPolygonNumber;
 
-    public Solver(Data data) {
-        listPolygon = new ArrayList[data.NB_ELEMENTS.length];
-        for (int i = 0; i < data.NB_ELEMENTS.length; i++) {
-            listPolygon[i] = new ArrayList<>();
-            for (int j = 0; j < data.NB_ELEMENTS[i]; j++) {
-                listPolygon[i].add(new Polygon(i));
+    public Solver(SoccerBall ball) {
+        this.availablePolygon = new Stack[Data.NB_ELEMENTS.length];
+        for (int i = 0; i < Data.NB_ELEMENTS.length; i++) {
+            this.availablePolygon[i] = new Stack<>();
+            for (int j = 0; j < Data.NB_ELEMENTS[i]; j++) {
+                this.availablePolygon[i].push(new Polygon(i));
             }
         }
-        ball = new SoccerBall(data.CONNECTIONS);
-        lastNumberPolygon = 0;
+        this.ball = ball;
+        this.lastPolygonNumber = -1;
     }
 
 
@@ -25,13 +24,14 @@ public class Solver {
             System.out.print(ball.nextFace + " - ");
 
             Polygon polygon = search();
-            lastNumberPolygon = 0;
+            this.lastPolygonNumber = -1;
+
             if (polygon == null) {
                 if (!testRotation()) {
-                    Polygon polygonPop = ball.popFace();
-                    lastNumberPolygon = polygonPop.getElementNumber();
-                    polygonPop.reinitialize();
-                    listPolygon[lastNumberPolygon].add(polygonPop);
+                    Polygon polygonPoped = ball.popFace();
+                    this.lastPolygonNumber = polygonPoped.getElementNumber();
+                    polygonPoped.reinitialize();
+                    this.availablePolygon[this.lastPolygonNumber].push(polygonPoped);
                     System.out.println("Pop face");
                 }else {
                     System.out.println("Rotate face");
@@ -39,7 +39,6 @@ public class Solver {
             }
             else {
                 ball.addFace(polygon);
-                listPolygon[polygon.getElementNumber()].remove(0);
                 System.out.println("Add face");
 
             }
@@ -47,9 +46,9 @@ public class Solver {
     }
 
     private Polygon search() throws Exception{
-        for (int index=lastNumberPolygon + 1; index < listPolygon.length; index ++) {
-            if (!listPolygon[index].isEmpty() && listPolygon[index].get(0).getType() == ball.typeFace()) {
-                Polygon polygon = listPolygon[index].get(0);
+        for (int index=this.lastPolygonNumber + 1; index < this.availablePolygon.length; index++) {
+            if (!this.availablePolygon[index].isEmpty() && this.availablePolygon[index].get(0).getType() == ball.typeFace()) {
+                Polygon polygon = this.availablePolygon[index].pop();
                 polygon.reinitialize();
                 while (!polygon.completeRotation()){
                     if (!ball.testFace(polygon)) {
@@ -59,6 +58,7 @@ public class Solver {
                         polygon.rotate();
                     }
                 }
+                this.availablePolygon[index].push(polygon);
             }
         }
         return null;
