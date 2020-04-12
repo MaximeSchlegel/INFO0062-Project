@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class Solver {
@@ -21,7 +20,6 @@ public class Solver {
 
     public void solve()throws Exception {
         while (!ball.isComplete()) {
-            System.out.print(ball.nextFace + " - ");
 
             Polygon polygon = search();
             this.lastPolygonNumber = -1;
@@ -32,14 +30,11 @@ public class Solver {
                     this.lastPolygonNumber = polygonPoped.getElementNumber();
                     polygonPoped.reinitialize();
                     this.availablePolygon[this.lastPolygonNumber].push(polygonPoped);
-                    System.out.println("Pop face");
                 }else {
-                    System.out.println("Rotate face");
                 }
             }
             else {
                 ball.addFace(polygon);
-                System.out.println("Add face");
 
             }
         }
@@ -47,11 +42,11 @@ public class Solver {
 
     private Polygon search() throws Exception{
         for (int index=this.lastPolygonNumber + 1; index < this.availablePolygon.length; index++) {
-            if (!this.availablePolygon[index].isEmpty() && this.availablePolygon[index].get(0).getType() == ball.typeFace()) {
+            if (!this.availablePolygon[index].isEmpty() && this.availablePolygon[index].get(0).getType() == ball.nextFaceType()) {
                 Polygon polygon = this.availablePolygon[index].pop();
                 polygon.reinitialize();
                 while (!polygon.completeRotation()){
-                    if (!ball.testFace(polygon)) {
+                    if (!ball.testNextFace(polygon)) {
                         return polygon;
                     }
                     else {
@@ -66,12 +61,12 @@ public class Solver {
 
     private boolean testRotation() throws Exception{
         do {
-            ball.rotateTop();
-            if (ball.completeRotationTop()) {
+            ball.rotateTopFace();
+            if (ball.fullRotationTopFace()) {
                 return false;
             }
         }
-        while (ball.hasConflict());
+        while (ball.hasConflictTopFace());
         return true;
     }
 }

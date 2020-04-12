@@ -3,7 +3,7 @@ public class Polygon {
     private int[] sideType;
     private int orientation;
 
-    public Polygon(int type){
+    public Polygon(int type) {
         //Create a polygon based on the type list of its side
         this.type = type;
         this.sideType = Data.ELEMENTS_SIDES[type];
